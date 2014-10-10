@@ -1,0 +1,62 @@
+<?php
+
+namespace Vox\Treinamento\Tdd\Tests;
+
+use Vox\Treinamento\Tdd\Calculadora;
+
+class CalculadoraTest extends AbstractCalculadoraTestCase
+{
+
+    protected $calc;
+
+    public function setUp()
+    {
+        $this->calc = new Calculadora();
+    }
+
+    public function testSomar()
+    {
+        $this->assertEquals($this->calc->somar(1, 1), 2);
+    }
+
+    public function testSubitrair()
+    {
+        $this->assertEquals($this->calc->subitrair(1, 1), 0);
+        $this->assertEquals($this->calc->subitrair(5, 2), 3);
+    }
+
+    public function testMultiplicar()
+    {
+        $this->assertEquals($this->calc->multiplicar(2, 2), 4);
+        $this->assertEquals($this->calc->multiplicar(2, 1), 2);
+    }
+
+    public function testDividir()
+    {
+        $this->assertEquals($this->calc->dividir(1, 1), 1);
+        $this->assertEquals($this->calc->dividir(4, 2), 2);
+        $this->assertEquals($this->calc->dividir(8, 2), 4);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testRetornoDividir()
+    {
+        $this->assertEquals($this->calc->dividir(2, 0), 1);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testArgumentoInvalido()
+    {
+        $this->assertEquals($this->calc->somar('a', 1), 2);
+        $this->assertEquals($this->calc->somar('b', '1'), 2);
+        $this->assertEquals($this->calc->subitrair('c', 1), 0);
+        $this->assertEquals($this->calc->subitrair(1, 'd'), 0);
+        $this->assertEquals($this->calc->multiplicar('Ada', 2), 4);
+        $this->assertEquals($this->calc->multiplicar(2, 'sad'), 4);
+    }
+
+}
